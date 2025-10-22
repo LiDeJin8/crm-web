@@ -31,9 +31,20 @@
         </el-form-item>
         <el-form-item v-if="dialogProps.title !== '重置' && dialogProps.row!.type == 0" label="角色" prop="roleId">
           <el-select v-model="dialogProps.row!.roleId" filterable placeholder="请选择角色" class="w-full">
-            <el-option v-for="item in dialogProps.roleList" :key="item.Id" :label="item.name" :value="item.id" class="isabel-option" />
+            <el-option v-for="item in dialogProps.roleList" :key="item.Id" :label="item.name" :value="item.id" class="isabel-option" />   
           </el-select>
         </el-form-item>
+         <el-form-item v-if="dialogProps.title !== '重置'" label="所属部门" prop="departId">
+          <el-cascader
+            v-model="dialogProps.row!.departId"
+            :props="{ value: 'id', label: 'name', emitPath: false, checkStrictly: true }"
+            placeholder="请选择管理员所属部门"
+            :options="departmentList"
+            :show-all-levels="false"
+            filterable
+          />
+        </el-form-item>
+         
         <el-form-item v-if="dialogProps.title !== '重置'" label="状态" prop="status">
           <el-radio-group v-model="dialogProps.row!.status">
             <el-radio :label="1" border>正常</el-radio>
@@ -58,6 +69,11 @@ import { Dialog } from '@/components/Dialog'
 import { getRoleList } from '@/api/modules/role'
 import { getManagerInfoApi } from '@/api/modules/manager'
 import { useAppStoreWithOut } from '@/store/modules/app'
+import { useDepartmentStore } from '@/store/modules/department'
+
+const departmentStore = useDepartmentStore()
+const departmentList = departmentStore.departmentList
+
 const appStore = useAppStoreWithOut()
 interface DialogProps {
   title: string
@@ -152,6 +168,7 @@ const handleSubmit = () => {
       })
       ElMessage.success({ message: `${dialogProps.value.title}管理员成功！` })
       dialogProps.value.getTableList!()
+      await departmentStore.getDepartmentList()
       dialogVisible.value = false
       ruleFormRef.value!.resetFields()
       cancelDialog(true)

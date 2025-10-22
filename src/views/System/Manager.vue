@@ -36,6 +36,12 @@ import ManagerDialog from '@/views/System/components/ManagerDialog.vue'
 import { CirclePlus, Delete, EditPen, View } from '@element-plus/icons-vue'
 import { getManagerPage, addManager, editManager, deleteManager } from '@/api/modules/manager'
 import { getRoleList } from '@/api/modules/role'
+import { useDepartmentStore } from '@/store/modules/department'
+
+
+const departmentStore = useDepartmentStore()
+
+
 
 // 获取 ProTable 元素，调用其获取刷新数据方法（还能获取到当前查询参数，方便导出携带参数）
 const proTable = ref()
@@ -81,6 +87,32 @@ const columns: ColumnProps<SysManager.ResManagerList>[] = [
     enum: getRoleList,
     fieldNames: { label: 'name', value: 'id' }
   },
+   {
+    prop: 'departId',
+    label: '所属部门',
+    enum: departmentStore.departmentList,
+    fieldNames: { label: 'name', value: 'id' },
+    search: { el: 'cascader', span: 2, props: { props: { checkStrictly: true }, filterable: true } },
+  }, 
+/*  {
+  prop: 'departId',
+  label: '所属部门',
+  enum: departmentStore.departmentList,
+  fieldNames: { label: 'name', value: 'id' },
+  search: {
+    el: 'cascader',
+    span: 2,
+    props: { props: { checkStrictly: true }, filterable: true }
+  },
+  render: (scope) => {
+    const depId = scope.row && scope.row.departId
+    const depList = departmentStore.departmentList || []
+    const dep = depList.find((d) => d.id === depId)
+    return dep ? dep.name : ''
+  }
+}, */
+
+
   {
     prop: 'status',
     label: '状态',
@@ -123,4 +155,6 @@ const openDrawer = (title: string, row: Partial<SysManager.ResManagerList> = {})
   }
   dialogRef.value.acceptParams(params)
 }
+
+
 </script>
