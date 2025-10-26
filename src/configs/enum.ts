@@ -39,6 +39,16 @@ export enum IntoPublicSeaStatus {
 export enum IsKeyDecisionMaker{
   YES, NO
 }
+export enum ProductStatus {
+ INITIALIZING,
+ ONLINE,
+ OFFLINE
+}
+export const ProductStatusList: { [key in ProductStatus]: EnumInfo } = {
+ [ProductStatus.INITIALIZING]: { value: 0, label: '初始化' },
+ [ProductStatus.ONLINE]: { value: 1, label: '上架' },
+ [ProductStatus.OFFLINE]: { value: 2, label: '下架' }
+}
 
 export const CustomerLevelList:{[key in CustomerLevel]:EnumInfo}={
   [CustomerLevel.ORDINARY_CUSTOMER]:{value:0,label:'普通客户'},

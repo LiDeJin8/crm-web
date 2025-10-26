@@ -11,4 +11,5 @@ export const CustomerApi = {
     toPublic:(params:any)=>http.post(COMMON_ADMIN_API+'/customer/toPublic',params),
     toPrivate:(params:any)=>http.post(COMMON_ADMIN_API+'/customer/toPrivate',params)
     
+    
 }
