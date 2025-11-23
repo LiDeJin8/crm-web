@@ -24,6 +24,31 @@ export enum Gender{
   FEMALE,
   SECRET
 }
+export enum LeadStatus{
+  NOT_CONVERTED,// 未转化成客户
+  CONVERTED,// 已转化为客户
+  INVALID// 无用线索
+}
+export enum FollowUpMethod{
+  PHONE,// 电话
+  VISIT,// 上⻔拜访
+  WECHAT,// 微信
+  SMS// 短信
+}
+
+
+export const LeadStatusList:{[key in LeadStatus]:EnumInfo}={
+  [LeadStatus.NOT_CONVERTED] : {value:0,label:'未转化成客户'},
+  [LeadStatus.CONVERTED] : {value:1,label:'已转化为客户'},
+  [LeadStatus.INVALID] : {value:2,label:'无用线索'}
+}
+
+export const FollowUpMethodList:{[key in FollowUpMethod]:EnumInfo}={
+  [FollowUpMethod.PHONE]:{value:0,label:'电话'},
+  [FollowUpMethod.VISIT]:{value:1,label:'上⻔拜访'},
+  [FollowUpMethod.WECHAT]:{value:2,label:'微信'},
+  [FollowUpMethod.SMS]:{value:3,label:'短信'}
+}
 
 export enum FollowUpStatus {
   NEW_CUSTOMER,
@@ -43,6 +68,20 @@ export enum ProductStatus {
  INITIALIZING,
  ONLINE,
  OFFLINE
+}
+
+export enum ContractStatus{
+  INITIALIZING,
+  UNDER_REVIEW,APPROVED,
+  REJECTED
+}
+
+
+export const ContractStatusList:{[key in ContractStatus]:EnumInfo}={
+  [ContractStatus.INITIALIZING]:{value:0,label:'初始化'},
+  [ContractStatus.UNDER_REVIEW]:{value:1,label:'审核中'},
+  [ContractStatus.APPROVED]:{value:2,label:'审核通过'},
+  [ContractStatus.REJECTED]:{value:3,label:'审核未通过'}
 }
 export const ProductStatusList: { [key in ProductStatus]: EnumInfo } = {
  [ProductStatus.INITIALIZING]: { value: 0, label: '初始化' },

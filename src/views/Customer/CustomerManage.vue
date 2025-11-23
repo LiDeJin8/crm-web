@@ -10,7 +10,7 @@
         :searchCol="{ xs: 2, sm: 3, md: 4, lg: 6, xl: 8 }"
         >  
         <!-- 表格 header 按钮 -->
-         <template #tableHeader="scope">
+          <template #tableHeader="scope" v-if="props.isShowHeader">
             <el-button 
                 type="primary" 
                 :icon="CirclePlus" 
@@ -36,11 +36,11 @@
                 >
                 批量删除
             </el-button>
-        </template>
+        </template> 
 
         <!-- 表格操作 -->
-         <template #operation="scope">        
-            <el-button 
+         <template #operation="scope" v-if="props.isShowHeader">        
+             <el-button 
             type="primary" link 
             :icon="EditPen" 
             v-hasPermi="['sys:customer:edit']" 
@@ -64,7 +64,7 @@
             @click="customerToPublic(scope.row.id)"
             >
             转入公海
-        </el-button>
+        </el-button> 
         </template>  
     </ProTable> 
         <CustomerDialog ref="dialogRef"/> 
@@ -81,7 +81,7 @@ import {CustomerLevelList,
     FollowUpStatusList,
     GenderList,
     IsKeyDecisionMakerList} from '@/configs/enum'
-import {CirclePlus,EditPen,Delete,Download,Share} from '@element-plus/icons-vue'
+ import {CirclePlus,EditPen,Delete,Download,Share} from '@element-plus/icons-vue' 
 import CustomerDialog from './components/CustomerDialog.vue'
 import { useHandleData } from '@/hooks/useHandleData'
 import {ElMessage,ElMessageBox}from'element-plus'
@@ -89,6 +89,9 @@ import{useDownload}from'@/hooks/useDownload'
 
 // 获取 ProTable 元素，调用其获取刷新数据方法（还能获取到当前查询参数，方便导出携带参数）
 const proTable = ref()
+const props=defineProps({isShowHeader:{type:Boolean,default:true}})
+// 暴露给父组件调用
+defineExpose({proTable})
 // 如果表格需要初始化请求参数，直接定义传给 ProTable(之后每次请求都会自动带上该参数，此参数更改之后也会一直带上，改变此参数会自动刷新表格数据)
 const initParam = reactive({isPublic:0})
 const dataSize=ref(0)

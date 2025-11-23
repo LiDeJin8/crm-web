@@ -117,3 +117,8 @@ export namespace Forum {
     nickname: string
   }
 }
+
+export interface TradeArray{
+  timeList:string[]
+  countList?:number[]
+}

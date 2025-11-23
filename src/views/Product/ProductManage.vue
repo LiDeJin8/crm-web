@@ -10,7 +10,7 @@
       :searchCol="{ xs: 2, sm: 3, md: 4, lg: 6, xl: 8 }"
     >
       <!-- 表格 header 按钮 -->
-      <template #tableHeader>
+      <template #tableHeader v-if="props.isShowHeader">
         <el-button
           type="primary"
           :icon="CirclePlus"
@@ -22,7 +22,7 @@
       </template>
 
        <!-- 表格操作 -->
-      <template #operation="scope">
+      <template #operation="scope" v-if="props.isShowHeader">
         <el-button
           type="primary"
           link
@@ -85,7 +85,9 @@ import ProductStateDialog from './components/ProductStateDialog.vue'
 
 /* ProTable 实例 */
 const proTable = ref()
-
+const props=defineProps({isShowHeader:{type:Boolean,default:true}})
+// 暴露给父组件调用
+defineExpose({proTable})
 /* 默认请求参数 */
 const initParam = reactive({ isPublic: 1 })
 const dataSize= ref(0)
